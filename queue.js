@@ -1,40 +1,56 @@
-//First is First out
+//FIFO
 
 class Queue{
-    constructor() {
-        this.items = {}
-        this.front = 0 
-        this.rear = 0
+    constructor(){
+        this.items = []
     }
 
     enqueue(element){
-        this.items[this.rear] = element
-        this.rear++;
+        this.items.push(element)
     }
 
     dequeue(){
-        if(this.isEmpty()) return 'Queue is Empty'
-        const item = this.items[this.front]
-        delete this.items[this.front]
-        this.front++
-        return item;
+        return this.items.shift()
     }
 
-    peek(){
-        if(this.isEmpty()) return 'Queue is Empty'
-        return this.items[this.front]
+    front(){
+        return this.items[0]
+    }
+
+    size(){
+        return this.items.length
     }
 
     isEmpty(){
-        return this.rear === this.front
+        return this.items.length == 0
+    }
+
+    print(){
+        console.log(this.items.toString())
     }
 }
 
-const q = new Queue()
-q.enqueue('fd')
-q.enqueue('fs')
-q.enqueue('fa')
-console.log(q.dequeue())
-console.log(q.peek())
-console.log(q.isEmpty())
-console.log(q)
+
+
+const hotPotato = (nameList, num) => {
+    const queue = new Queue()
+
+    for(let i = 0; i < nameList.length; i++){
+        queue.enqueue(nameList[i])
+    }
+
+    let eliminated = ''
+    while( queue.size() > 1 ){
+        for(let i = 0; i < num; i++){
+            queue.enqueue(queue.dequeue())
+        }
+        eliminated = queue.dequeue();
+        console.log(eliminated + ' was eliminated from the Hot Potato game!')
+    }
+
+    return queue.dequeue()
+}
+
+let name = ['John', 'Jane', 'Doe', 'Micheal', 'Jessy']
+let winner = hotPotato(name, 3)
+console.log(`The winner is ${winner}`)
