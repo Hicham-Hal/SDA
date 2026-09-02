@@ -8,21 +8,19 @@ class Node{
 class LinkedList{
     constructor(){
         this.head = null
+        this.tail = null
         this.length = 0
     }
 
     append(element){
         const node = new Node(element)
-        let current;
 
         if(this.head === null){
             this.head = node
+            this.tail = node
         }else{
-            current = this.head;
-            while(current.next){
-                current = current.next
-            }
-            current.next = node
+            this.tail.next = node
+            this.tail = node
         }
         this.length++
     }
@@ -79,7 +77,7 @@ class LinkedList{
         string = '';
 
         while(current){
-            string += current.element + (current.next ? 'n' : '')
+            string += current.element + (current.next ? ", " : '')
             current = current.next
         }
 
@@ -120,8 +118,8 @@ class LinkedList{
 }
 
 const list = new LinkedList()
-list.append(15)
-list.append(14)
+console.log(list.append(15))
+console.log(list.append(14))
 list.append(13)
 list.insert(1, 18)
 // console.log(list.removeAt(1))
