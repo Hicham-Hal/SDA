@@ -7,33 +7,58 @@ class Node{
 }
 
 class DoublyLinkedList{
-    constructor(){
-        this.head = null
-        this.tail = null
-        this.length = 0
+    #head;
+    #tail;
+    #length
+
+    append(element){
+        const node = new Node(element)
+        if(!this.#head){
+            this.#head = node
+            this.#tail = node
+        }else{
+            this.#tail.next = node
+            node.prev = this.#tail
+            this.#tail = node
+        }
+        this.#length++
+    }
+
+    preappend(element){
+        const node = new Node(element)
+        if(!this.#head){
+            this.#head = node
+            this.#tail = node
+        }else{
+            node.next = this.#head
+            this.#head.prev = node
+            this.#head = node
+        }
+
+        this.#length++
     }
 
     insert(position, element){
-        if(position > -1 && position <= this.length){
+        if(position > -1 && position <= this.#length){
             const node = new Node(element)
-            let current = this.head,
+            let current = this.#head,
             previous,
             index = 0
             
             if(position === 0){
-                if(!this.head){
-                    this.head = node
-                    this.tail = node
+                if(!this.#head){
+                    this.#head = node
+                    this.#tail = node
                 }else{
                     node.next = current;
                     current.prev = node;
-                    this.head = node;
+                    this.#head = node;
                 }
-            }else if(position === this.length){
-                current = this.tail
+            }else if(position === this.#length){
+                current = this.#tail
                 current.next = node
                 node.prev = current
-                this.tail = node
+                this.#tail = node
             }else{
                 while(index++ < position){
                     previous = current
@@ -46,7 +71,7 @@ class DoublyLinkedList{
                 current.prev = node
             }
 
-            this.length++
+            this.#length++
             return true
         }else{
             return false
@@ -54,22 +79,22 @@ class DoublyLinkedList{
     }
 
     removeAt(position){
-        if(position > -1 && position < this.length){
-            let current = this.head,
+        if(position > -1 && position < this.#length){
+            let current = this.#head,
             index = 1,
             previous
 
             if(position === 0){
-                this.head = current.next
-                if(length === 1){
-                    this.tail = null
+                this.#head = current.next
+                if(#length === 1){
+                    this.#tail = null
                 }else{
-                    this.head.prev = null
+                    this.#head.prev = null
                 }
-            }else if(position === this.length-1){
-                current = this.tail
-                this.tail = current.prev
-                this.tail.next = null
+            }else if(position === this.#length-1){
+                current = this.#tail
+                this.#tail = current.prev
+                this.#tail.next = null
             }else{
                 while(index++ < position){
                     previous = current
@@ -78,7 +103,7 @@ class DoublyLinkedList{
                 previous.next = current.next
                 current.next.prev = previous
             }
-            this.length--
+            this.#length--
             return current.element
         }else{
             return false
