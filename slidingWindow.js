@@ -13,6 +13,7 @@ function maxSum(nums, k){
         windowSum -= nums[right - k];
         maxSum = Math.max(maxSum, windowSum)
     }
+    console.log(maxSum)
     return maxSum;
 }
 
